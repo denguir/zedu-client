@@ -1,0 +1,58 @@
+version: "3.7"
+
+services:
+  web:
+    image: nginx:1.19.6
+    ports:
+      - 80:80
+    volumes:
+      - ./src/zeus:/var/www/zeus:delegated
+      - ./src/thot:/var/www/thot:delegated
+      - ./templates:/etc/nginx/templates
+    depends_on:
+      - php
+      - mariadb
+    networks:
+      - net
+    env_file: ./vars.env
+
+  php:
+    build:
+      context: .
+      dockerfile: php.Dockerfile
+    volumes:
+      - ./src/zeus:/var/www/zeus
+      - ./src/thot:/var/www/thot
+      - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf:delegated
+    networks:
+      - net
+    env_file: ./vars.env
+
+  mariadb:
+    image: mariadb:10.4
+    restart: always
+    volumes: 
+      - mariadb-data:/var/lib/mysql:delegated
+      - ./mariadb-data/init.sql:/mariadb-data/init.sql:delegated
+    command: 
+      "mysqld --init-file /mariadb-data/init.sql"
+    networks:
+      - net
+    env_file: ./vars.env
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8000:80
+    depends_on:
+      - mariadb
+    networks:
+      - net
+    env_file: ./vars.env
+
+volumes: 
+  mariadb-data:
+
+networks:
+  net:
+    driver: bridge

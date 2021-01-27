@@ -1,0 +1,6 @@
+[submodule "src/thot"]
+	path = src/thot
+	url = https://github.com/denguir/thot2
+[submodule "src/zeus"]
+	path = src/zeus
+	url = https://github.com/denguir/ZeusEdu

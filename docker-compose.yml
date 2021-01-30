@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./src/zeus:/var/www/zeus:delegated
+      - ./src/zedu:/var/www/zedu:delegated
       - ./src/thot:/var/www/thot:delegated
       - ./templates:/etc/nginx/templates
     depends_on:
@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: php.Dockerfile
     volumes:
-      - ./src/zeus:/var/www/zeus
+      - ./src/zedu:/var/www/zedu
       - ./src/thot:/var/www/thot
       - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf:delegated
     networks:

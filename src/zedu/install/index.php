@@ -10,8 +10,7 @@ $smarty = new Smarty();
 require_once 'inc/fonctions.inc.php';
 
 $connexion = connectPDO(SERVEUR, BASE, NOM, MDP);
-$path = '../../../mariadb-data/ZeusEdu.sql';
-$query = file_get_contents($path);
+$query = file_get_contents('../ZeusEdu.sql');
 $array = explode(";\n", $query);
 $nb = 0;
 

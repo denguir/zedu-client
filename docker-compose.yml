@@ -33,9 +33,6 @@ services:
     restart: always
     volumes: 
       - mariadb-data:/var/lib/mysql:delegated
-      - ./mariadb-data/init.sql:/mariadb-data/init.sql:delegated
-    command: 
-      "mysqld --init-file /mariadb-data/init.sql"
     networks:
       - net
     env_file: ./vars.env
